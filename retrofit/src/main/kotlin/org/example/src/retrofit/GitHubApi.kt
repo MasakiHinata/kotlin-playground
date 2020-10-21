@@ -61,4 +61,8 @@ object GitHubApi {
             null
         }
     }
+
+    suspend fun createUser(user: User){
+        service.createUser(user)
+    }
 }

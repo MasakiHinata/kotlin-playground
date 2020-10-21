@@ -21,4 +21,7 @@ interface GitHubService {
     @GET("users")
     suspend fun users(@QueryMap options: Map<String, String>): List<User>
 
+    @POST("users/new")
+    suspend fun createUser(@Body user: User)
+
 }
