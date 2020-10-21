@@ -8,7 +8,6 @@ import org.example.src.retrofit.GitHubService
 
 fun main(): Unit = runBlocking {
     launch {
-        val user = User("abc", 100, "https://example.com")
-        GitHubApi.createUser(user)
+        println(GitHubApi.usersWithHeader())
     }
 }
