@@ -10,23 +10,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 object GitHubApi {
-    private val client by lazy {
-        OkHttpClient
-            .Builder()
-            .addInterceptor(MyInterceptor())
-            .build()
-    }
+    private val client = OkHttpClient
+        .Builder()
+        .addInterceptor(MyInterceptor())
+        .build()
 
-    private val service: GitHubService by lazy {
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://api.github.com/")
-            .client(client)
-            .build()
+    private val retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl("https://api.github.com/")
+        .client(client)
+        .build()
 
-        retrofit.create(GitHubService::class.java)
-    }
+    private val service: GitHubService = retrofit.create(GitHubService::class.java)
 
+    // GET
     suspend fun users(): List<User>? = withContext(Dispatchers.IO) {
         return@withContext try {
             val response = service.users()
@@ -53,6 +50,7 @@ object GitHubApi {
 //        })
     }
 
+    // パラメータ付きのGET
     suspend fun repositories(user: User): List<Repository>? {
         return try {
             service.repositories(user.login)
@@ -62,6 +60,7 @@ object GitHubApi {
         }
     }
 
+    // クエリ付きのGET
     suspend fun users(desc: Boolean): List<User>? {
         return try {
             service.users(if (desc) "desc" else "asc")
@@ -71,6 +70,7 @@ object GitHubApi {
         }
     }
 
+    // HEADER付きのGET
     suspend fun usersWithHeader(): List<User>? {
         return try {
             val response = service.usersWithHeader()
@@ -78,12 +78,13 @@ object GitHubApi {
             println(response.headers())
             println(response.code())
             response.body()
-        }catch (e: IOException){
+        } catch (e: IOException) {
             println(e)
             null
         }
     }
 
+    // POST
     suspend fun createUser(user: User) {
         service.createUser(user)
     }
