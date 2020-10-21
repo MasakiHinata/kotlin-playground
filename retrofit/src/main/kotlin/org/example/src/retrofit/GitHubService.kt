@@ -3,9 +3,7 @@ package org.example.src.retrofit
 import org.example.src.model.Repository
 import org.example.src.model.User
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface GitHubService {
     @GET("users")
@@ -16,4 +14,11 @@ interface GitHubService {
 
     @GET("users/{user}/repos")
     suspend fun repositories(@Path("user") user: String): List<Repository>
+
+    @GET("users")
+    suspend fun users(@Query("sort") sort: String): List<User>
+
+    @GET("users")
+    suspend fun users(@QueryMap options: Map<String, String>): List<User>
+
 }

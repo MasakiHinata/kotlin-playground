@@ -52,4 +52,13 @@ object GitHubApi {
             null
         }
     }
+
+    suspend fun users(desc: Boolean): List<User>? {
+        return try {
+            service.users(if (desc) "desc" else "asc")
+        } catch (e: IOException) {
+            println(e)
+            null
+        }
+    }
 }
