@@ -1,6 +1,14 @@
+schema {
+    query: Query
+
+    mutation: Mutation
+}
+
 type Query {
     version: String!
+
     users: [User]
+
     user(id: String): User
 }
 
