@@ -1,0 +1,65 @@
+plugins {
+    id("org.springframework.boot") version "2.1.6.RELEASE"
+    id("org.jetbrains.kotlin.jvm") version "1.3.21"
+    id("org.jetbrains.kotlin.plugin.spring") version "1.3.21"
+    id("io.spring.dependency-management") version "1.0.7.RELEASE"
+    id("com.google.protobuf") version "0.8.9" // ①Protocol Buffersを扱うためのプラグイン
+    id( "java")
+}
+
+group = "com.example.grpc.kotlin"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("io.github.lognet:grpc-spring-boot-starter:3.3.0") // ②gRPCをSpring Bootで扱うためのStarter
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjsr305=strict']
+        jvmTarget = '1.8'
+    }
+}
+
+// ③Protocol Buffersのコードジェネレータに関する設定
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.5.1-1"
+    }
+
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.4.0"
+        }
+    }
+
+    // protocの実行時にgrpcプラグインを呼び出す
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                grpc
+            }
+        }
+    }
+
+    // 自動生成の出力先
+    generatedFilesBaseDir = "$projectDir/src/"
+}
+
+// ④sourceSetsに自動生成クラスのディレクトリを追加
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/grpc'
+        }
+    }
+}
