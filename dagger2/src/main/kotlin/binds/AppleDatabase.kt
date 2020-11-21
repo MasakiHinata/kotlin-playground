@@ -1,4 +1,4 @@
-package database
+package binds
 
 import javax.inject.Inject
 

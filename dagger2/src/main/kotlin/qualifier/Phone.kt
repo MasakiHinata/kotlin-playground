@@ -1,4 +1,4 @@
-package phone
+package qualifier
 
 class Phone(
     private val battery: Battery

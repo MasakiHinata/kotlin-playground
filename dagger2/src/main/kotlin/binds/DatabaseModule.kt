@@ -1,4 +1,4 @@
-package database
+package binds
 
 import dagger.Binds
 import dagger.Module

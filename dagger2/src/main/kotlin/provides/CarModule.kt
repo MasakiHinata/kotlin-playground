@@ -1,10 +1,10 @@
-package car
+package provides
 
 import dagger.Module
 import dagger.Provides
 
 /**
- * Provider
+ * Provides
  * インターフェースなどに対してDIできるようになる
  */
 

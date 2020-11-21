@@ -1,4 +1,4 @@
-package car
+package provides
 
 interface Car {
     fun drive()

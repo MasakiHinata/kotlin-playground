@@ -1,4 +1,4 @@
-package phone
+package qualifier
 
 import dagger.Component
 

@@ -1,4 +1,4 @@
-package phone
+package qualifier
 
 interface Battery {
     val batteryLevel: Int

@@ -1,4 +1,4 @@
-package car
+package provides
 
 interface Engine {
     val speed: Int

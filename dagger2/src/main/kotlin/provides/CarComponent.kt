@@ -1,4 +1,4 @@
-package car
+package provides
 
 import dagger.Component
 
