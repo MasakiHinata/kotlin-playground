@@ -1,6 +1,9 @@
 import constructor.DaggerCalculatorComponent
 import provides.DaggerCarComponent
 import binds.DaggerDatabaseComponent
+import bindsInstance.DaggerUserComponent
+import builder.DaggerSmartPhoneComponent
+import builder.SmartPhoneModule
 import fieldinjection.FruitsApplication
 import qualifier.DaggerPhoneComponent
 
@@ -24,4 +27,22 @@ fun main() {
     // フィールドインジェクション
     val fruitsApp = FruitsApplication()
     println(fruitsApp.apple.name)
+
+    // builder
+    val spComponent = DaggerSmartPhoneComponent
+        .builder()
+        .smartPhoneModule(SmartPhoneModule("password"))
+        .build()
+    val smartPhone = spComponent.getSmartPhone()
+    println(smartPhone.password)
+
+    // Binds Instance
+    val userComponent = DaggerUserComponent
+        .builder()
+        .name("Alice")
+        .hobby("reading")
+        .age(18)
+        .build()
+    val user = userComponent.getUser()
+    println(user.toString())
 }
