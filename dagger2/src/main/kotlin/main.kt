@@ -1,6 +1,7 @@
 import calculator.DaggerCalculatorComponent
 import car.DaggerCarComponent
 import database.DaggerDatabaseComponent
+import phone.DaggerPhoneComponent
 
 fun main() {
     // コンストラクタインジェクション
@@ -14,4 +15,8 @@ fun main() {
     // Provider
     val car = DaggerCarComponent.create().getCar()
     car.drive()
+
+    // Qualifier
+    val phone = DaggerPhoneComponent.create().getPhone()
+    println(phone.batteryLevel())
 }
