@@ -20,6 +20,8 @@ dependencies {
     // apollo
     implementation ("com.apollographql.apollo:apollo-runtime:2.2.0")
     implementation ("com.apollographql.apollo:apollo-coroutines-support:2.2.0")
+    // okhttp
+    implementation("com.squareup.okhttp3:okhttp:4.3.1")
 }
 
 apollo {

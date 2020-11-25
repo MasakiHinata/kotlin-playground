@@ -2,6 +2,7 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.toDeferred
 import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
 
 fun main() = runBlocking {
     val apolloClient = ApolloClient.builder()
@@ -18,6 +19,18 @@ fun main() = runBlocking {
     println(responseDetail.data?.launch)
 
     // Mutation
-    val responseLogin = apolloClient.mutate(LoginMutation(email = Input.fromNullable("example@example.com"))).toDeferred().await()
+    val responseLogin =
+        apolloClient.mutate(LoginMutation(email = Input.fromNullable("example@example.com"))).toDeferred().await()
     println(responseLogin.data?.login)
+
+    // Authentication
+    val interceptor = AuthorizationInterceptor(responseLogin.data?.login ?: "")
+    val apolloClientWithAuth = ApolloClient.builder()
+        .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com/")
+        .okHttpClient(
+            OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build()
+        )
+        .build()
 }
